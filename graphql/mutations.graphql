@@ -1,0 +1,199 @@
+# frontend/graphql/mutations.graphql
+mutation CreateShop($input: CreateShopInput!) {
+  createShop(input: $input) {
+    id
+    name
+    address
+    email
+    phone_number
+    image
+    is_active
+    created_at
+  }
+}
+
+mutation UpdateShop($id: String!, $input: UpdateShopInput!) {
+  updateShop(id: $id, input: $input) {
+    id
+    name
+    address
+    email
+    phone_number
+    image
+    is_active
+    updated_at
+  }
+}
+
+mutation DeleteShop($id: String!) {
+  deleteShop(id: $id)
+}
+
+mutation CreateProduct($input: CreateProductInput!) {
+  createProduct(input: $input) {
+    id
+    title
+    description
+    stock
+    ingredient
+    barcode
+    price
+    expired_at
+    image
+    created_at
+    shop {
+      id
+      name
+    }
+  }
+}
+
+mutation UpdateProduct($id: String!, $input: UpdateProductInput!) {
+  updateProduct(id: $id, input: $input) {
+    id
+    title
+    description
+    stock
+    ingredient
+    barcode
+    price
+    expired_at
+    image
+    updated_at
+  }
+}
+
+mutation DeleteProduct($id: String!) {
+  deleteProduct(id: $id)
+}
+
+mutation CreateDeliveryPerson($input: CreateDeliveryPersonInput!) {
+  createDeliveryPerson(input: $input) {
+    id
+    name
+    image
+    phone_number
+    created_at
+  }
+}
+
+mutation UpdateDeliveryPerson($id: String!, $input: UpdateDeliveryPersonInput!) {
+  updateDeliveryPerson(id: $id, input: $input) {
+    id
+    name
+    image
+    phone_number
+    updated_at
+  }
+}
+
+mutation DeleteDeliveryPerson($id: String!) { # Added DeleteDeliveryPerson mutation
+  deleteDeliveryPerson(id: $id)
+}
+
+mutation DeliverProduct(
+  $productId: String!
+  $shopId: String!
+  $deliveryPersonId: String!
+  $pieces: Int!
+) {
+  deliverProduct(
+    product_id: $productId
+    shop_id: $shopId
+    delivery_person_id: $deliveryPersonId
+    pieces: $pieces
+  ) {
+    id
+    pieces
+    created_at
+    product {
+      id
+      title
+    }
+    shop {
+      id
+      name
+    }
+    delivery_person {
+      id
+      name
+    }
+  }
+}
+
+mutation ConfirmDelivery(
+  $productId: String!
+  $shopId: String!
+  $deliveryPersonId: String!
+  $totalPrice: Int!
+  $transactionType: TransactionType!
+  $signature: String
+) {
+  confirmDelivery(
+    product_id: $productId
+    shop_id: $shopId
+    delivery_person_id: $deliveryPersonId
+    total_price: $totalPrice
+    transaction_type: $transactionType
+    signature: $signature
+  ) {
+    id
+    total_price
+    transaction_type
+    paid
+    paid_at
+    signature
+    created_at
+  }
+}
+
+mutation ReturnProduct(
+  $productId: String!
+  $shopId: String!
+  $deliveryPersonId: String!
+  $pieces: Int!
+  $signature: String!
+) {
+  returnProduct(
+    product_id: $productId
+    shop_id: $shopId
+    delivery_person_id: $deliveryPersonId
+    pieces: $pieces
+    signature: $signature
+  ) {
+    id
+    pieces
+    signature
+    created_at
+  }
+}
+
+mutation CreateVendor($input: CreateVendorInput!) {
+  createVendor(input: $input) {
+    id
+    name
+    email
+    phone_number
+    address
+    image
+    is_active
+    created_at
+  }
+}
+
+mutation UpdateVendor($id: String!, $input: UpdateVendorInput!) {
+  updateVendor(id: $id, input: $input) {
+    id
+    name
+    email
+    phone_number
+    address
+    image
+    is_active
+    updated_at
+  }
+}
+
+mutation DeleteVendor($id: String!) {
+  deleteVendor(id: $id)
+}

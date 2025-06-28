@@ -1,0 +1,215 @@
+# frontend/graphql/queries.graphql
+query GetShops {
+  shops {
+    id
+    name
+    address
+    is_active
+    email
+    phone_number
+    image
+    created_at
+    updated_at
+    products {
+      id
+      title
+      price
+      stock
+      image
+    }
+  }
+}
+
+query GetShop($id: String!) {
+  shop(id: $id) {
+    id
+    name
+    address
+    is_active
+    email
+    phone_number
+    image
+    created_at
+    updated_at
+    products {
+      id
+      title
+      description
+      price
+      stock
+      ingredient
+      barcode
+      expired_at
+      image
+      created_at
+      updated_at
+    }
+  }
+}
+
+query GetProducts {
+  products {
+    id
+    title
+    description
+    stock
+    ingredient
+    barcode
+    price
+    expired_at
+    image
+    created_at
+    updated_at
+    shop {
+      id
+      name
+      address
+    }
+    vendor {
+      id
+      name
+    }
+  }
+}
+
+query GetProduct($id: String!) {
+  product(id: $id) {
+    id
+    title
+    description
+    stock
+    ingredient
+    barcode
+    price
+    expired_at
+    image
+    created_at
+    updated_at
+    shop {
+      id
+      name
+      address
+      email
+      phone_number
+    }
+    product_stock {
+      id
+      pieces
+      is_delivered
+      created_at
+    }
+    product_remaining {
+      id
+      pieces
+      is_delivered
+      created_at
+    }
+  }
+}
+
+query GetProductsByShop($shopId: String!) {
+  productsByShop(shop_id: $shopId) {
+    id
+    title
+    description
+    stock
+    price
+    image
+    created_at
+  }
+}
+
+query GetDeliveryPersons {
+  deliveryPersons {
+    id
+    name
+    image
+    phone_number
+    created_at
+    updated_at
+  }
+}
+
+query GetProductDeliveredHistory($shopId: String) {
+  productDeliveredHistory(shop_id: $shopId) {
+    id
+    total_price
+    transaction_type
+    paid
+    paid_at
+    signature
+    created_at
+    product {
+      id
+      title
+      image
+    }
+    shop {
+      id
+      name
+    }
+    delivery_person {
+      id
+      name
+    }
+  }
+}
+
+query GetProductReturnHistory($shopId: String) {
+  productReturnHistory(shop_id: $shopId) {
+    id
+    pieces
+    signature
+    created_at
+    product {
+      id
+      title
+      image
+    }
+    shop {
+      id
+      name
+    }
+    delivery_person {
+      id
+      name
+    }
+  }
+}
+query GetVendors {
+  vendors {
+    id
+    name
+    email
+    phone_number
+    address
+    image
+    is_active
+    created_at
+    updated_at
+    products {
+      id
+      title
+      price
+    }
+  }
+}
+
+query GetVendor($id: String!) {
+  vendor(id: $id) {
+    id
+    name
+    email
+    phone_number
+    address
+    image
+    is_active
+    created_at
+    updated_at
+    products {
+      id
+      title
+      price
+    }
+  }
+}
