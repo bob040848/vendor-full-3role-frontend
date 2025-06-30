@@ -1,4 +1,3 @@
-// frontend/components/Sidebar.tsx
 import {
   Package,
   ShoppingCart,
@@ -6,10 +5,11 @@ import {
   Store,
   Truck,
   RotateCcw,
+  Factory,
   X,
 } from "lucide-react";
 
-type SidebarProps ={
+type SidebarProps = {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   sidebarOpen: boolean;
@@ -23,6 +23,7 @@ const menuItems = [
   { id: "shops", label: "Дэлгүүрийн мэдээлэл", icon: Store },
   { id: "delivery", label: "Түгээлт", icon: Truck },
   { id: "returns", label: "Буцаалт", icon: RotateCcw },
+  { id: "todayProducts", label: "Өнөөдрийн үйлдвэрлэсэн бүтээгдэхүүн", icon: Factory },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({

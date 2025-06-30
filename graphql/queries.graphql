@@ -13,9 +13,51 @@ query GetShops {
     products {
       id
       title
-      price
+      description
       stock
+      ingredient
+      barcode
+      price
+      expired_at
       image
+      created_at
+      updated_at
+    }
+    product_deliveries {
+      id
+      pieces
+      created_at
+    }
+    product_delivered_history {
+      id
+      pieces
+      total_price
+      transaction_type
+      paid
+      paid_at
+      created_at
+    }
+    product_return_history {
+      id
+      pieces
+      created_at
+    }
+    shop_orders {
+      id
+      order_number
+      status
+      total_amount
+      created_at
+    }
+    daily_sales_reports {
+      id
+      date
+      total_sales
+      total_orders
+      cash_sales
+      transfer_sales
+      pending_payments
+      created_at
     }
   }
 }
@@ -35,14 +77,107 @@ query GetShop($id: String!) {
       id
       title
       description
-      price
       stock
       ingredient
       barcode
+      price
       expired_at
       image
       created_at
       updated_at
+      vendor {
+        id
+        name
+      }
+    }
+    product_deliveries {
+      id
+      pieces
+      created_at
+      product {
+        id
+        title
+      }
+      delivery_person {
+        id
+        name
+      }
+    }
+    product_delivered_history {
+      id
+      pieces
+      total_price
+      transaction_type
+      paid
+      paid_at
+      signature
+      created_at
+      product {
+        id
+        title
+      }
+      delivery_person {
+        id
+        name
+      }
+    }
+    product_return_history {
+      id
+      pieces
+      signature
+      created_at
+      product {
+        id
+        title
+      }
+      delivery_person {
+        id
+        name
+      }
+    }
+    shop_orders {
+      id
+      order_number
+      status
+      total_amount
+      notes
+      ordered_at
+      delivered_at
+      created_at
+      updated_at
+      vendor {
+        id
+        name
+      }
+      user {
+        id
+        email
+      }
+      order_items {
+        id
+        quantity
+        unit_price
+        total_price
+        product {
+          id
+          title
+        }
+      }
+    }
+    daily_sales_reports {
+      id
+      date
+      total_sales
+      total_orders
+      cash_sales
+      transfer_sales
+      pending_payments
+      created_at
+      updated_at
+      vendor {
+        id
+        name
+      }
     }
   }
 }
@@ -64,10 +199,82 @@ query GetProducts {
       id
       name
       address
+      email
+      phone_number
     }
     vendor {
       id
       name
+      email
+    }
+    product_deliveries {
+      id
+      pieces
+      created_at
+      delivery_person {
+        id
+        name
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_delivered_history {
+      id
+      pieces
+      total_price
+      transaction_type
+      paid
+      paid_at
+      signature
+      created_at
+      delivery_person {
+        id
+        name
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_return_history {
+      id
+      pieces
+      signature
+      created_at
+      delivery_person {
+        id
+        name
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_remaining {
+      id
+      pieces
+      is_delivered
+      created_at
+    }
+    product_stock {
+      id
+      pieces
+      is_delivered
+      created_at
+    }
+    shop_order_items {
+      id
+      quantity
+      unit_price
+      total_price
+      created_at
+      shop_order {
+        id
+        order_number
+        status
+      }
     }
   }
 }
@@ -91,6 +298,66 @@ query GetProduct($id: String!) {
       address
       email
       phone_number
+      is_active
+    }
+    vendor {
+      id
+      name
+      email
+      phone_number
+      is_active
+    }
+    product_deliveries {
+      id
+      pieces
+      created_at
+      delivery_person {
+        id
+        name
+        phone_number
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_delivered_history {
+      id
+      pieces
+      total_price
+      transaction_type
+      paid
+      paid_at
+      signature
+      created_at
+      delivery_person {
+        id
+        name
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_return_history {
+      id
+      pieces
+      signature
+      created_at
+      delivery_person {
+        id
+        name
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_remaining {
+      id
+      pieces
+      is_delivered
+      created_at
     }
     product_stock {
       id
@@ -98,11 +365,17 @@ query GetProduct($id: String!) {
       is_delivered
       created_at
     }
-    product_remaining {
+    shop_order_items {
       id
-      pieces
-      is_delivered
+      quantity
+      unit_price
+      total_price
       created_at
+      shop_order {
+        id
+        order_number
+        status
+      }
     }
   }
 }
@@ -113,9 +386,63 @@ query GetProductsByShop($shopId: String!) {
     title
     description
     stock
+    ingredient
+    barcode
     price
+    expired_at
     image
     created_at
+    updated_at
+    vendor {
+      id
+      name
+      email
+    }
+    product_deliveries {
+      id
+      pieces
+      created_at
+      delivery_person {
+        id
+        name
+      }
+    }
+    product_delivered_history {
+      id
+      pieces
+      total_price
+      transaction_type
+      paid
+      paid_at
+      signature
+      created_at
+      delivery_person {
+        id
+        name
+      }
+    }
+    product_return_history {
+      id
+      pieces
+      signature
+      created_at
+      delivery_person {
+        id
+        name
+      }
+    }
+    product_remaining {
+      id
+      pieces
+      is_delivered
+      created_at
+    }
+    product_stock {
+      id
+      pieces
+      is_delivered
+      created_at
+    }
   }
 }
 
@@ -127,30 +454,91 @@ query GetDeliveryPersons {
     phone_number
     created_at
     updated_at
+    product_deliveries {
+      id
+      pieces
+      created_at
+      product {
+        id
+        title
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_delivered_history {
+      id
+      pieces
+      total_price
+      transaction_type
+      paid
+      paid_at
+      signature
+      created_at
+      product {
+        id
+        title
+      }
+      shop {
+        id
+        name
+      }
+    }
+    product_return_history {
+      id
+      pieces
+      signature
+      created_at
+      product {
+        id
+        title
+      }
+      shop {
+        id
+        name
+      }
+    }
   }
 }
 
 query GetProductDeliveredHistory($shopId: String) {
   productDeliveredHistory(shop_id: $shopId) {
     id
+    pieces
     total_price
     transaction_type
     paid
     paid_at
     signature
     created_at
+    updated_at
     product {
       id
       title
       image
+      price
+      vendor {
+        id
+        name
+      }
     }
     shop {
       id
       name
+      address
     }
     delivery_person {
       id
       name
+      phone_number
+    }
+    payment {
+      id
+      amount
+      transaction_type
+      payment_reference
+      paid_at
     }
   }
 }
@@ -161,21 +549,29 @@ query GetProductReturnHistory($shopId: String) {
     pieces
     signature
     created_at
+    updated_at
     product {
       id
       title
       image
+      vendor {
+        id
+        name
+      }
     }
     shop {
       id
       name
+      address
     }
     delivery_person {
       id
       name
+      phone_number
     }
   }
 }
+
 query GetVendors {
   vendors {
     id
@@ -190,7 +586,28 @@ query GetVendors {
     products {
       id
       title
+      description
       price
+      stock
+      image
+      created_at
+    }
+    shop_orders {
+      id
+      order_number
+      status
+      total_amount
+      created_at
+    }
+    daily_sales_reports {
+      id
+      date
+      total_sales
+      total_orders
+      cash_sales
+      transfer_sales
+      pending_payments
+      created_at
     }
   }
 }
@@ -209,7 +626,49 @@ query GetVendor($id: String!) {
     products {
       id
       title
+      description
       price
+      stock
+      ingredient
+      barcode
+      expired_at
+      image
+      created_at
+      updated_at
+      shop {
+        id
+        name
+      }
+    }
+    shop_orders {
+      id
+      order_number
+      status
+      total_amount
+      notes
+      ordered_at
+      delivered_at
+      created_at
+      updated_at
+      shop {
+        id
+        name
+      }
+    }
+    daily_sales_reports {
+      id
+      date
+      total_sales
+      total_orders
+      cash_sales
+      transfer_sales
+      pending_payments
+      created_at
+      updated_at
+      shop {
+        id
+        name
+      }
     }
   }
 }

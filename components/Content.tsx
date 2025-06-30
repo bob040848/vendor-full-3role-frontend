@@ -1,4 +1,3 @@
-// frontend/components/Content.tsx
 import { useQuery, useMutation } from "@apollo/client";
 import { Plus, Edit, Trash2, RotateCcw } from "lucide-react";
 import {
@@ -15,8 +14,10 @@ import {
   ProductReturnHistory,
 } from "@/generated/graphql";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import ProductForm from "./ProductForm";
 
-type ContentProps ={
+type ContentProps = {
   activeTab: string;
   setShowProductForm: (show: boolean) => void;
   setShowSalesForm: (show: boolean) => void;
@@ -56,15 +57,23 @@ const Content: React.FC<ContentProps> = ({
   const [deleteProduct] = useMutation(DELETE_PRODUCT, {
     refetchQueries: [{ query: GET_PRODUCTS }],
   });
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [scannedBarcode, setScannedBarcode] = useState("");
 
   const handleDeleteProduct = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this product?")) return;
+    if (!confirm("Та энэ бүтээгдэхүүнийг устгахдаа итгэлтэй байна уу?")) return;
     try {
       await deleteProduct({ variables: { id } });
     } catch (error) {
-      console.error("Error deleting product:", error);
-      alert("Failed to delete product");
+      console.error("Бүтээгдэхүүн устгахад алдаа гарлаа:", error);
+      alert("Бүтээгдэхүүн устгахад алдаа гарлаа");
     }
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setSelectedProduct(product);
+    setScannedBarcode(product.barcode?.toString() || "");
+    setShowProductForm(true);
   };
 
   const renderContent = () => {
@@ -85,6 +94,18 @@ const Content: React.FC<ContentProps> = ({
     const sales = salesData?.productDeliveredHistory || [];
     const returns = returnsData?.productReturnHistory || [];
 
+    // Filter out sales/returns with missing product or shop data
+    const validSales = sales.filter(sale => sale.product && sale.shop);
+    const validReturns = returns.filter(returnItem => returnItem.product && returnItem.shop);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayProducts = products.filter((product) => {
+      const createdDate = new Date(product.created_at);
+      createdDate.setHours(0, 0, 0, 0);
+      return createdDate.getTime() === today.getTime();
+    });
+
     const EmptyState = ({ message }: { message: string }) => (
       <div className="text-center py-10">
         <p className="text-orange-700">{message}</p>
@@ -100,7 +121,11 @@ const Content: React.FC<ContentProps> = ({
                 Бүтээгдэхүүний мэдээлэл
               </h2>
               <button
-                onClick={() => setShowProductForm(true)}
+                onClick={() => {
+                  setSelectedProduct(null);
+                  setScannedBarcode("");
+                  setShowProductForm(true);
+                }}
                 className={cn(
                   "px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 flex items-center gap-2"
                 )}
@@ -150,7 +175,10 @@ const Content: React.FC<ContentProps> = ({
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex gap-2">
-                            <button className="p-1 text-orange-600 hover:bg-orange-50 rounded">
+                            <button
+                              onClick={() => handleEditProduct(product)}
+                              className="p-1 text-orange-600 hover:bg-orange-50 rounded"
+                            >
                               <Edit size={16} />
                             </button>
                             <button
@@ -187,7 +215,7 @@ const Content: React.FC<ContentProps> = ({
                 Борлуулалт бүртгэх
               </button>
             </div>
-            {sales.length === 0 ? (
+            {validSales.length === 0 ? (
               <EmptyState message="Борлуулалт байхгүй байна" />
             ) : (
               <div className="bg-white rounded-lg shadow overflow-x-auto">
@@ -212,14 +240,14 @@ const Content: React.FC<ContentProps> = ({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-orange-100">
-                    {sales.map((sale) => (
+                    {validSales.map((sale) => (
                       <tr key={sale.id}>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {sale.product.title}
+                          {sale.product!.title}
                         </td>
-                        {/* <td className="px-6 py-4 whitespace-nowrap">
-                          {sale.pieces || "N/A"}
-                        </td> */}
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {sale.pieces ?? "N/A"}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {sale.total_price.toLocaleString()}₮
                         </td>
@@ -227,7 +255,7 @@ const Content: React.FC<ContentProps> = ({
                           {new Date(sale.created_at).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {sale.shop.name}
+                          {sale.shop!.name}
                         </td>
                       </tr>
                     ))}
@@ -239,14 +267,14 @@ const Content: React.FC<ContentProps> = ({
         );
 
       case "revenue":
-        const totalRevenue = sales.reduce(
+        const totalRevenue = validSales.reduce(
           (sum, sale) => sum + sale.total_price,
           0
         );
-        // const totalQuantity = sales.reduce(
-        //   (sum, sale) => sum + (sale.pieces || 0),
-        //   0
-        // );
+        const totalQuantity = validSales.reduce(
+          (sum, sale) => sum + (sale.pieces ?? 0),
+          0
+        );
         return (
           <div>
             <h2 className="text-2xl font-bold text-orange-800 mb-6">
@@ -265,20 +293,20 @@ const Content: React.FC<ContentProps> = ({
                 <h3 className="text-lg font-semibold text-orange-700">
                   Борлуулсан ширхэг
                 </h3>
-                {/* <p className="text-3xl font-bold text-orange-600">
+                <p className="text-3xl font-bold text-orange-600">
                   {totalQuantity}
-                </p> */}
+                </p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-lg font-semibold text-orange-700">
                   Гүйлгээний тоо
                 </h3>
                 <p className="text-3xl font-bold text-orange-600">
-                  {sales.length}
+                  {validSales.length}
                 </p>
               </div>
             </div>
-            {sales.length === 0 ? (
+            {validSales.length === 0 ? (
               <EmptyState message="Борлуулалтын мэдээлэл байхгүй байна" />
             ) : (
               <div className="bg-white rounded-lg shadow p-6">
@@ -286,15 +314,15 @@ const Content: React.FC<ContentProps> = ({
                   Борлуулалтын дэлгэрэнгүй
                 </h3>
                 <div className="space-y-4">
-                  {sales.map((sale) => (
+                  {validSales.map((sale) => (
                     <div
                       key={sale.id}
                       className="flex justify-between items-center p-4 border border-orange-100 rounded-lg"
                     >
                       <div>
-                        <p className="font-medium">{sale.product.title}</p>
+                        <p className="font-medium">{sale.product!.title}</p>
                         <p className="text-sm text-orange-600">
-                          {sale.shop.name} -{" "}
+                          {sale.shop!.name} -{" "}
                           {new Date(sale.created_at).toLocaleDateString()}
                         </p>
                       </div>
@@ -302,9 +330,9 @@ const Content: React.FC<ContentProps> = ({
                         <p className="font-semibold">
                           {sale.total_price.toLocaleString()}₮
                         </p>
-                        {/* <p className="text-sm text-orange-600">
-                          {sale.pieces || "N/A"} ширхэг
-                        </p> */}
+                        <p className="text-sm text-orange-600">
+                          {sale.pieces ?? "N/A"} ширхэг
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -329,7 +357,7 @@ const Content: React.FC<ContentProps> = ({
                     <h3 className="text-xl font-semibold text-orange-800 mb-2">
                       {shop.name}
                     </h3>
-                    <p className="text-orange-600 mb-2">{shop.address}</p>
+                    <p className="text-orange-600 mb-2">{shop.address || "N/A"}</p>
                     <p className="text-orange-600 mb-4">
                       {shop.phone_number || "N/A"}
                     </p>
@@ -413,7 +441,7 @@ const Content: React.FC<ContentProps> = ({
                 Буцаалт хийх
               </button>
             </div>
-            {returns.length === 0 ? (
+            {validReturns.length === 0 ? (
               <EmptyState message="Буцаалт байхгүй байна" />
             ) : (
               <div className="bg-white rounded-lg shadow overflow-x-auto">
@@ -435,10 +463,10 @@ const Content: React.FC<ContentProps> = ({
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-orange-100">
-                    {returns.map((returnItem) => (
+                    {validReturns.map((returnItem) => (
                       <tr key={returnItem.id}>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {returnItem.product.title}
+                          {returnItem.product!.title}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {returnItem.pieces}
@@ -447,7 +475,58 @@ const Content: React.FC<ContentProps> = ({
                           {new Date(returnItem.created_at).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          {returnItem.shop.name}
+                          {returnItem.shop!.name}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+
+      case "todayProducts":
+        return (
+          <div>
+            <h2 className="text-2xl font-bold text-orange-800 mb-6">
+              Өнөөдрийн үйлдвэрлэсэн бүтээгдэхүүн
+            </h2>
+            {todayProducts.length === 0 ? (
+              <EmptyState message="Өнөөдөр үйлдвэрлэсэн бүтээгдэхүүн байхгүй байна" />
+            ) : (
+              <div className="bg-white rounded-lg shadow overflow-x-auto">
+                <table className="w-full min-w-[640px]">
+                  <thead className="bg-orange-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-orange-700 uppercase">
+                        Нэр
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-orange-700 uppercase">
+                        Төрөл
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-orange-700 uppercase">
+                        Тоо ширхэг
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-orange-700 uppercase">
+                        Борлуулагч
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-orange-100">
+                    {todayProducts.map((product) => (
+                      <tr key={product.id}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {product.title}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {product.description || "N/A"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {product.stock}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {product.vendor?.name || "N/A"}
                         </td>
                       </tr>
                     ))}
@@ -465,7 +544,27 @@ const Content: React.FC<ContentProps> = ({
     }
   };
 
-  return renderContent();
+  return (
+    <>
+      {renderContent()}
+      {selectedProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-lg shadow-xl">
+            <ProductForm
+              setShowProductForm={() => {
+                setShowProductForm(false);
+                setSelectedProduct(null);
+                setScannedBarcode("");
+              }}
+              scannedBarcode={scannedBarcode}
+              setScannedBarcode={setScannedBarcode}
+              product={selectedProduct}
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default Content;

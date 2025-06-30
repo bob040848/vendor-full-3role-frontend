@@ -14,10 +14,15 @@ const isProtectedRoute = createRouteMatcher([
   '/deliveries(.*)',
   '/returns(.*)',
   '/user-dashboard(.*)',
+  '/onboarding',
 ]);
 
 const isPublicApiRoute = createRouteMatcher([
   '/api/graphql',
+]);
+
+const isProtectedApiRoute = createRouteMatcher([
+  '/api/user(.*)',
 ]);
 
 const isPublicRoute = createRouteMatcher([
@@ -28,7 +33,6 @@ const isPublicRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware((auth, req) => {
- 
   if (isPublicRoute(req)) {
     return;
   }
@@ -37,11 +41,18 @@ export default clerkMiddleware((auth, req) => {
     if (req.method === 'OPTIONS' || req.url.includes('introspection')) {
       return;
     }
+    auth(); 
+    return;
+  }
+
+  if (isProtectedApiRoute(req)) {
     auth();
+    return;
   }
   
   if (isProtectedRoute(req)) {
     auth();
+    return;
   }
 });
 
