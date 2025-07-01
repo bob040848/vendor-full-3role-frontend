@@ -1,14 +1,14 @@
 // frontend/providers/apollo-provider.tsx
-'use client';
+"use client";
 
-import { ApolloProvider } from '@apollo/client';
-import { useAuth } from '@clerk/nextjs';
-import { client } from '../lib/apollo-client';
-import { ReactNode, useEffect } from 'react';
+import { ApolloProvider } from "@apollo/client";
+import { useAuth } from "@clerk/nextjs";
+import { client } from "../lib/apollo-client";
+import { ReactNode, useEffect } from "react";
 
-type ApolloWrapperProps ={
+type ApolloWrapperProps = {
   children: ReactNode;
-}
+};
 
 export function ApolloWrapper({ children }: ApolloWrapperProps) {
   const { getToken, isSignedIn, isLoaded } = useAuth();
@@ -19,14 +19,14 @@ export function ApolloWrapper({ children }: ApolloWrapperProps) {
         if (isSignedIn) {
           try {
             const token = await getToken();
-            if (typeof window !== 'undefined') {
+            if (typeof window !== "undefined") {
               (window as any).__APOLLO_AUTH_TOKEN__ = token;
             }
           } catch (error) {
-            console.error('Failed to get auth token:', error);
+            console.error("Failed to get auth token:", error);
           }
         } else {
-          if (typeof window !== 'undefined') {
+          if (typeof window !== "undefined") {
             (window as any).__APOLLO_AUTH_TOKEN__ = null;
           }
           await client.clearStore();
@@ -36,7 +36,6 @@ export function ApolloWrapper({ children }: ApolloWrapperProps) {
 
     updateToken();
 
-    
     let interval: NodeJS.Timeout | null = null;
     if (isSignedIn) {
       interval = setInterval(updateToken, 30000);
@@ -49,7 +48,6 @@ export function ApolloWrapper({ children }: ApolloWrapperProps) {
     };
   }, [getToken, isSignedIn, isLoaded]);
 
-  
   if (!isLoaded) {
     return <div>Loading...</div>;
   }
