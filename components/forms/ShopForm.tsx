@@ -1,12 +1,15 @@
 // frontend/components/forms/ShopForm.tsx
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useCreateShopMutation, useUpdateShopMutation } from '@/generated/graphql';
-import { z } from 'zod';
-import { createShopSchema, updateShopSchema } from '@/lib/zod-schemas';
+import React, { useState, useEffect } from "react";
+import {
+  useCreateShopMutation,
+  useUpdateShopMutation,
+} from "@/generated/graphql";
+import { z } from "zod";
+// import { createShopSchema, updateShopSchema } from "@/lib/zod-schemas";
 // import LoadingSpinner from '@/components/LoadingSpinner';
-import ErrorMessage from '../ui/ErrorMessage';
+import ErrorMessage from "../ui/ErrorMessage";
 
 interface ShopFormProps {
   onClose: () => void;
@@ -22,12 +25,18 @@ interface ShopFormProps {
   };
 }
 
-const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) => {
-  const [name, setName] = useState(initialData?.name || '');
-  const [address, setAddress] = useState(initialData?.address || '');
-  const [email, setEmail] = useState(initialData?.email || '');
-  const [phoneNumber, setPhoneNumber] = useState(initialData?.phone_number || '');
-  const [image, setImage] = useState(initialData?.image || '');
+const ShopForm: React.FC<ShopFormProps> = ({
+  onClose,
+  onSuccess,
+  initialData,
+}) => {
+  const [name, setName] = useState(initialData?.name || "");
+  const [address, setAddress] = useState(initialData?.address || "");
+  const [email, setEmail] = useState(initialData?.email || "");
+  const [phoneNumber, setPhoneNumber] = useState(
+    initialData?.phone_number || ""
+  );
+  const [image, setImage] = useState(initialData?.image || "");
   const [isActive, setIsActive] = useState(initialData?.is_active ?? true);
   const [errors, setErrors] = useState<z.ZodIssue[]>([]);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -44,27 +53,33 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
     setSubmitError(null);
 
     let validationResult;
-    let input: any; 
+    let input: any;
 
     if (isEditing) {
       input = {
         name: name || undefined,
         address: address || undefined,
         email: email || undefined,
-        phone_number: phoneNumber === '' ? undefined : phoneNumber,
-        image: image === '' ? undefined : image,
+        phone_number: phoneNumber === "" ? undefined : phoneNumber,
+        image: image === "" ? undefined : image,
         is_active: isActive,
       };
-      validationResult = updateShopSchema.safeParse(input);
+      // validationResult = updateShopSchema.safeParse(input);
     } else {
-      input = { name, address, email, phone_number: phoneNumber || undefined, image: image || undefined };
-      validationResult = createShopSchema.safeParse(input);
+      input = {
+        name,
+        address,
+        email,
+        phone_number: phoneNumber || undefined,
+        image: image || undefined,
+      };
+      // validationResult = createShopSchema.safeParse(input);
     }
 
-    if (!validationResult.success) {
-      setErrors(validationResult.error.issues);
-      return;
-    }
+    // if (!validationResult.success) {
+    //   setErrors(validationResult.error.issues);
+    //   return;
+    // }
 
     try {
       if (isEditing) {
@@ -79,19 +94,25 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
       onSuccess();
       onClose();
     } catch (err: any) {
-      console.error('Shop Form Error:', err);
-      setSubmitError(err.message || 'An unexpected error occurred.');
+      console.error("Shop Form Error:", err);
+      setSubmitError(err.message || "An unexpected error occurred.");
     }
   };
 
-  const getErrorMessage = (field: string) => errors.find(err => err.path[0] === field)?.message;
+  const getErrorMessage = (field: string) =>
+    errors.find((err) => err.path[0] === field)?.message;
 
   return (
     <form onSubmit={handleSubmit} className="p-4 space-y-4 text-white">
       {submitError && <ErrorMessage message={submitError} />}
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">Shop Name</label>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-300 mb-1"
+        >
+          Shop Name
+        </label>
         <input
           type="text"
           id="name"
@@ -100,11 +121,18 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-orange-500 focus:border-orange-500"
           placeholder="Enter shop name"
         />
-        {getErrorMessage('name') && <p className="text-red-400 text-xs mt-1">{getErrorMessage('name')}</p>}
+        {getErrorMessage("name") && (
+          <p className="text-red-400 text-xs mt-1">{getErrorMessage("name")}</p>
+        )}
       </div>
 
       <div>
-        <label htmlFor="address" className="block text-sm font-medium text-gray-300 mb-1">Address</label>
+        <label
+          htmlFor="address"
+          className="block text-sm font-medium text-gray-300 mb-1"
+        >
+          Address
+        </label>
         <input
           type="text"
           id="address"
@@ -113,11 +141,20 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-orange-500 focus:border-orange-500"
           placeholder="Enter shop address"
         />
-        {getErrorMessage('address') && <p className="text-red-400 text-xs mt-1">{getErrorMessage('address')}</p>}
+        {getErrorMessage("address") && (
+          <p className="text-red-400 text-xs mt-1">
+            {getErrorMessage("address")}
+          </p>
+        )}
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email</label>
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-300 mb-1"
+        >
+          Email
+        </label>
         <input
           type="email"
           id="email"
@@ -126,11 +163,20 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-orange-500 focus:border-orange-500"
           placeholder="Enter shop email"
         />
-        {getErrorMessage('email') && <p className="text-red-400 text-xs mt-1">{getErrorMessage('email')}</p>}
+        {getErrorMessage("email") && (
+          <p className="text-red-400 text-xs mt-1">
+            {getErrorMessage("email")}
+          </p>
+        )}
       </div>
 
       <div>
-        <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-300 mb-1">Phone Number (Optional)</label>
+        <label
+          htmlFor="phoneNumber"
+          className="block text-sm font-medium text-gray-300 mb-1"
+        >
+          Phone Number (Optional)
+        </label>
         <input
           type="text"
           id="phoneNumber"
@@ -139,11 +185,20 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-orange-500 focus:border-orange-500"
           placeholder="Enter phone number"
         />
-        {getErrorMessage('phone_number') && <p className="text-red-400 text-xs mt-1">{getErrorMessage('phone_number')}</p>}
+        {getErrorMessage("phone_number") && (
+          <p className="text-red-400 text-xs mt-1">
+            {getErrorMessage("phone_number")}
+          </p>
+        )}
       </div>
 
       <div>
-        <label htmlFor="image" className="block text-sm font-medium text-gray-300 mb-1">Image URL (Optional)</label>
+        <label
+          htmlFor="image"
+          className="block text-sm font-medium text-gray-300 mb-1"
+        >
+          Image URL (Optional)
+        </label>
         <input
           type="text"
           id="image"
@@ -152,7 +207,11 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
           className="w-full p-2 bg-gray-700 border border-gray-600 rounded-md focus:ring-orange-500 focus:border-orange-500"
           placeholder="Enter image URL"
         />
-        {getErrorMessage('image') && <p className="text-red-400 text-xs mt-1">{getErrorMessage('image')}</p>}
+        {getErrorMessage("image") && (
+          <p className="text-red-400 text-xs mt-1">
+            {getErrorMessage("image")}
+          </p>
+        )}
       </div>
 
       {isEditing && (
@@ -164,7 +223,12 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
             onChange={(e) => setIsActive(e.target.checked)}
             className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-600 rounded"
           />
-          <label htmlFor="isActive" className="ml-2 block text-sm text-gray-300">Is Active</label>
+          <label
+            htmlFor="isActive"
+            className="ml-2 block text-sm text-gray-300"
+          >
+            Is Active
+          </label>
         </div>
       )}
 
@@ -181,7 +245,13 @@ const ShopForm: React.FC<ShopFormProps> = ({ onClose, onSuccess, initialData }) 
           className="px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors duration-200 disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? (isEditing ? 'Updating...' : 'Creating...') : (isEditing ? 'Update Shop' : 'Create Shop')}
+          {loading
+            ? isEditing
+              ? "Updating..."
+              : "Creating..."
+            : isEditing
+            ? "Update Shop"
+            : "Create Shop"}
         </button>
       </div>
     </form>
