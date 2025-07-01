@@ -65,7 +65,10 @@ export type CreateShopInput = {
 };
 
 export type CreateShopOrderInput = {
+<<<<<<< HEAD
   delivered_at?: InputMaybe<Scalars['DateTime']['input']>;
+=======
+>>>>>>> a5c56a7 (jajs)
   notes?: InputMaybe<Scalars['String']['input']>;
   order_items: Array<ShopOrderItemInput>;
   shop_id: Scalars['String']['input'];
@@ -673,6 +676,7 @@ export type Vendor = {
   user_id: Scalars['String']['output'];
 };
 
+<<<<<<< HEAD
 export type CreateShopOrderMutationVariables = Exact<{
   input: CreateShopOrderInput;
 }>;
@@ -680,6 +684,8 @@ export type CreateShopOrderMutationVariables = Exact<{
 
 export type CreateShopOrderMutation = { __typename?: 'Mutation', createShopOrder: { __typename?: 'ShopOrder', vendor_id: string, shop_id: string, id: string, notes?: string | null, ordered_at: any, delivered_at?: any | null, order_items: Array<{ __typename?: 'ShopOrderItem', quantity: number, product_id: string }> } };
 
+=======
+>>>>>>> a5c56a7 (jajs)
 export type CreateShopMutationVariables = Exact<{
   input: CreateShopInput;
 }>;
@@ -865,6 +871,7 @@ export type GetVendorQueryVariables = Exact<{
 export type GetVendorQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, email: string, phone_number?: string | null, address?: string | null, image?: string | null, is_active: boolean, created_at: any, updated_at: any, products: Array<{ __typename?: 'Product', id: string, title: string, description?: string | null, price: number, stock: number, ingredient?: string | null, barcode?: number | null, expired_at?: number | null, image?: string | null, created_at: any, updated_at: any, shop?: { __typename?: 'Shop', id: string, name: string } | null }>, shop_orders: Array<{ __typename?: 'ShopOrder', id: string, order_number: string, status: OrderStatus, total_amount: number, notes?: string | null, ordered_at: any, delivered_at?: any | null, created_at: any, updated_at: any, shop: { __typename?: 'Shop', id: string, name: string } }>, daily_sales_reports: Array<{ __typename?: 'DailySalesReport', id: string, date: any, total_sales: number, total_orders: number, cash_sales: number, transfer_sales: number, pending_payments: number, created_at: any, updated_at: any, shop: { __typename?: 'Shop', id: string, name: string } }> } | null };
 
 
+<<<<<<< HEAD
 export const CreateShopOrderDocument = gql`
     mutation CreateShopOrder($input: CreateShopOrderInput!) {
   createShopOrder(input: $input) {
@@ -907,6 +914,8 @@ export function useCreateShopOrderMutation(baseOptions?: Apollo.MutationHookOpti
 export type CreateShopOrderMutationHookResult = ReturnType<typeof useCreateShopOrderMutation>;
 export type CreateShopOrderMutationResult = Apollo.MutationResult<CreateShopOrderMutation>;
 export type CreateShopOrderMutationOptions = Apollo.BaseMutationOptions<CreateShopOrderMutation, CreateShopOrderMutationVariables>;
+=======
+>>>>>>> a5c56a7 (jajs)
 export const CreateShopDocument = gql`
     mutation CreateShop($input: CreateShopInput!) {
   createShop(input: $input) {
