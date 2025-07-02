@@ -9,7 +9,6 @@ import { format, parseISO } from "date-fns";
 import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
-import { useCreateShopOrderMutation } from "@/generated/graphql";
 
 type OrderAddProps = {
   onCancel: () => void;
@@ -42,13 +41,6 @@ export const OrderAdd = ({ onCancel }: OrderAddProps) => {
   const [orders, setOrders] = useState<OrderType[]>([]);
   const [deliveredDate, setDeliveredDate] = useState("");
   const [orderQuantity, setOrderQuantity] = useState("");
-  const [createOrder] = useCreateShopOrderMutation();
-
-  // createOrder({
-  //   variables:{
-
-  //   }
-  // })
 
   const getWeekday = (dateStr: string) => {
     const date = parseISO(dateStr);

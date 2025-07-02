@@ -22,7 +22,7 @@ type ContentProps = {
   setShowProductForm: (show: boolean) => void;
   setShowSalesForm: (show: boolean) => void;
   setShowReturnForm: (show: boolean) => void;
-}
+};
 
 const Content: React.FC<ContentProps> = ({
   activeTab,
@@ -95,8 +95,10 @@ const Content: React.FC<ContentProps> = ({
     const returns = returnsData?.productReturnHistory || [];
 
     // Filter out sales/returns with missing product or shop data
-    const validSales = sales.filter(sale => sale.product && sale.shop);
-    const validReturns = returns.filter(returnItem => returnItem.product && returnItem.shop);
+    const validSales = sales.filter((sale) => sale.product && sale.shop);
+    const validReturns = returns.filter(
+      (returnItem) => returnItem.product && returnItem.shop
+    );
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -357,7 +359,9 @@ const Content: React.FC<ContentProps> = ({
                     <h3 className="text-xl font-semibold text-orange-800 mb-2">
                       {shop.name}
                     </h3>
-                    <p className="text-orange-600 mb-2">{shop.address || "N/A"}</p>
+                    <p className="text-orange-600 mb-2">
+                      {shop.address || "N/A"}
+                    </p>
                     <p className="text-orange-600 mb-4">
                       {shop.phone_number || "N/A"}
                     </p>
