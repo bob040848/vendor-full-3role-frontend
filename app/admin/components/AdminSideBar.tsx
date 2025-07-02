@@ -8,6 +8,7 @@ import {
   Factory,
   X,
   HouseIcon,
+  UserRoundPen,
 } from "lucide-react";
 
 type AdminSidebarProps = {
@@ -24,7 +25,7 @@ const menuItems = [
   { id: "revenue", label: "Өдрийн орлого", icon: DollarSign },
   { id: "shops", label: "Дэлгүүрийн мэдээлэл", icon: Store },
   { id: "delivery", label: "Түгээлт", icon: Truck },
-  { id: "returns", label: "Буцаалт", icon: RotateCcw },
+  { id: "deliveryPerson", label: "Жолоочийн мэдээлэл", icon: UserRoundPen },
   {
     id: "todayProducts",
     label: "Өнөөдрийн үйлдвэрлэсэн бүтээгдэхүүн",
