@@ -65,6 +65,7 @@ export type CreateShopInput = {
 };
 
 export type CreateShopOrderInput = {
+  delivered_at?: InputMaybe<Scalars['DateTime']['input']>;
   notes?: InputMaybe<Scalars['String']['input']>;
   order_items: Array<ShopOrderItemInput>;
   shop_id: Scalars['String']['input'];
@@ -672,6 +673,13 @@ export type Vendor = {
   user_id: Scalars['String']['output'];
 };
 
+export type CreateShopOrderMutationVariables = Exact<{
+  input: CreateShopOrderInput;
+}>;
+
+
+export type CreateShopOrderMutation = { __typename?: 'Mutation', createShopOrder: { __typename?: 'ShopOrder', vendor_id: string, shop_id: string, id: string, notes?: string | null, ordered_at: any, delivered_at?: any | null, order_items: Array<{ __typename?: 'ShopOrderItem', quantity: number, product_id: string }> } };
+
 export type CreateShopMutationVariables = Exact<{
   input: CreateShopInput;
 }>;
@@ -857,6 +865,48 @@ export type GetVendorQueryVariables = Exact<{
 export type GetVendorQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, email: string, phone_number?: string | null, address?: string | null, image?: string | null, is_active: boolean, created_at: any, updated_at: any, products: Array<{ __typename?: 'Product', id: string, title: string, description?: string | null, price: number, stock: number, ingredient?: string | null, barcode?: number | null, expired_at?: number | null, image?: string | null, created_at: any, updated_at: any, shop?: { __typename?: 'Shop', id: string, name: string } | null }>, shop_orders: Array<{ __typename?: 'ShopOrder', id: string, order_number: string, status: OrderStatus, total_amount: number, notes?: string | null, ordered_at: any, delivered_at?: any | null, created_at: any, updated_at: any, shop: { __typename?: 'Shop', id: string, name: string } }>, daily_sales_reports: Array<{ __typename?: 'DailySalesReport', id: string, date: any, total_sales: number, total_orders: number, cash_sales: number, transfer_sales: number, pending_payments: number, created_at: any, updated_at: any, shop: { __typename?: 'Shop', id: string, name: string } }> } | null };
 
 
+export const CreateShopOrderDocument = gql`
+    mutation CreateShopOrder($input: CreateShopOrderInput!) {
+  createShopOrder(input: $input) {
+    vendor_id
+    shop_id
+    id
+    notes
+    ordered_at
+    delivered_at
+    order_items {
+      quantity
+      product_id
+    }
+  }
+}
+    `;
+export type CreateShopOrderMutationFn = Apollo.MutationFunction<CreateShopOrderMutation, CreateShopOrderMutationVariables>;
+
+/**
+ * __useCreateShopOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateShopOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateShopOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createShopOrderMutation, { data, loading, error }] = useCreateShopOrderMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateShopOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateShopOrderMutation, CreateShopOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateShopOrderMutation, CreateShopOrderMutationVariables>(CreateShopOrderDocument, options);
+      }
+export type CreateShopOrderMutationHookResult = ReturnType<typeof useCreateShopOrderMutation>;
+export type CreateShopOrderMutationResult = Apollo.MutationResult<CreateShopOrderMutation>;
+export type CreateShopOrderMutationOptions = Apollo.BaseMutationOptions<CreateShopOrderMutation, CreateShopOrderMutationVariables>;
 export const CreateShopDocument = gql`
     mutation CreateShop($input: CreateShopInput!) {
   createShop(input: $input) {

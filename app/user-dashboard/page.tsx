@@ -1,7 +1,11 @@
-import React from "react";
+import { Order, Sidebar } from "./components";
 
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div className="flex  h-screen w-screen">
+      <Order />
+    </div>
+  );
 };
 
 export default Home;

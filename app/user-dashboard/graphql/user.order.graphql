@@ -1,0 +1,14 @@
+mutation CreateShopOrder($input: CreateShopOrderInput!) {
+  createShopOrder(input: $input) {
+    vendor_id
+    shop_id
+    id
+    notes
+    ordered_at
+    delivered_at
+    order_items {
+      quantity
+      product_id
+    }
+  }
+}
