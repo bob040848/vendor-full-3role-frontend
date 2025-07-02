@@ -1,4 +1,16 @@
 import { useQuery, useMutation } from "@apollo/client";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+} from "recharts";
 import { Plus, Edit, Trash2, RotateCcw } from "lucide-react";
 import {
   GET_PRODUCTS,
@@ -15,7 +27,7 @@ import {
 } from "@/generated/graphql";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import ProductForm from "./ProductForm";
+import ProductForm from "@/components/ProductForm";
 
 type ContentProps = {
   activeTab: string;
@@ -24,7 +36,7 @@ type ContentProps = {
   setShowReturnForm: (show: boolean) => void;
 };
 
-const Content: React.FC<ContentProps> = ({
+const AdminContent: React.FC<ContentProps> = ({
   activeTab,
   setShowProductForm,
   setShowSalesForm,
@@ -115,6 +127,65 @@ const Content: React.FC<ContentProps> = ({
     );
 
     switch (activeTab) {
+      case "home":
+        // const TotalAmount = validSales.reduce(
+        //   (sum, sale) => sum + (sale.total_price || 0),
+        //   0
+        // );
+        // const data = [{ name: "Total", value: TotalAmount }];
+        // const date = validSales.find((sale) => sale.created_at);
+        const data = [
+          { date: "2025-06-01", sales: 240 },
+          { date: "2025-06-02", sales: 300 },
+          { date: "2025-06-03", sales: 200 },
+          { date: "2025-06-04", sales: 278 },
+          { date: "2025-06-05", sales: 189 },
+          { date: "2025-06-06", sales: 300 },
+          { date: "2025-06-07", sales: 190 },
+        ];
+        return (
+          <div className="grid grid-cols-2 grid-rows-2 gap-10 ">
+            <div className="flex flex-col mb-6">
+              <h2 className="text-2xl font-bold text-orange-800">
+                Борлуулалтын график
+              </h2>
+              <div className="w-[100%] h-80 p-4 bg-white rounded shadow">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={data}>
+                    <CartesianGrid stroke="#ccc" />
+                    <XAxis dataKey="date" />
+                    <YAxis
+                      tickFormatter={(value) => `${value.toLocaleString()} ₮`}
+                    />
+                    <Tooltip
+                      formatter={(value: number) =>
+                        `${value.toLocaleString()} ₮`
+                      }
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="sales"
+                      stroke="#9f2d00"
+                      strokeWidth={2}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-orange-800">Тооцоо</h2>
+              <div className="w-[100%] bg-white h-80"></div>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-orange-800">Буцаалт</h2>
+              <div className="w-[100%] bg-white h-80"></div>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-orange-800">Үлдэгдэл</h2>
+              <div className="w-[100%] bg-white h-80"></div>
+            </div>
+          </div>
+        );
       case "products":
         return (
           <div>
@@ -571,4 +642,4 @@ const Content: React.FC<ContentProps> = ({
   );
 };
 
-export default Content;
+export default AdminContent;

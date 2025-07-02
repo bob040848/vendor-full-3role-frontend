@@ -1,19 +1,19 @@
 // frontend/app/vendor-dash/page.tsx
 "use client";
 import { useState, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import Content from "@/components/Content";
+import AdminContent from "./components/AdminContent";
 import ProductForm from "@/components/ProductForm";
 import SalesForm from "@/components/SalesForm";
 import ReturnForm from "@/components/ReturnForm";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { useAuth } from "@clerk/nextjs";
+import AdminSidebar from "@/components/AdminSideBar";
 
 const VendorDashboard = () => {
   const { isLoaded } = useAuth();
-  const [activeTab, setActiveTab] = useState("products");
+  const [activeTab, setActiveTab] = useState("home");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showProductForm, setShowProductForm] = useState(false);
   const [showSalesForm, setShowSalesForm] = useState(false);
@@ -78,7 +78,7 @@ const VendorDashboard = () => {
   if (isPageLoading) {
     return (
       <LoadingScreen
-        message="Vendor dashboard ачаалж байна..."
+        message="Admin dashboard ачаалж байна..."
         variant="branded"
       />
     );
@@ -87,7 +87,7 @@ const VendorDashboard = () => {
   return (
     <ProtectedRoute allowedRoles={["VENDOR", "ADMIN"]}>
       <div className="flex h-screen bg-orange-50 overflow-hidden relative">
-        <Sidebar
+        <AdminSidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           sidebarOpen={sidebarOpen}
@@ -106,7 +106,7 @@ const VendorDashboard = () => {
 
           <main className="flex-1 overflow-x-hidden overflow-y-auto bg-orange-50 p-3 sm:p-4 lg:p-6">
             <div className="max-w-7xl mx-auto">
-              <Content
+              <AdminContent
                 activeTab={activeTab}
                 setShowProductForm={() => handleOpenForm("product")}
                 setShowSalesForm={() => handleOpenForm("sales")}

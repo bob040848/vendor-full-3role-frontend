@@ -7,9 +7,10 @@ import {
   RotateCcw,
   Factory,
   X,
+  HouseIcon,
 } from "lucide-react";
 
-type SidebarProps = {
+type AdminSidebarProps = {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   sidebarOpen: boolean;
@@ -17,12 +18,12 @@ type SidebarProps = {
 };
 
 const menuItems = [
+  { id: "home", label: "Нүүр хуудас", icon: HouseIcon },
   { id: "products", label: "Бүтээгдэхүүний мэдээлэл", icon: Package },
   { id: "sales", label: "Борлуулсан бүтээгдэхүүн", icon: ShoppingCart },
   { id: "revenue", label: "Өдрийн орлого", icon: DollarSign },
   { id: "shops", label: "Дэлгүүрийн мэдээлэл", icon: Store },
   { id: "delivery", label: "Түгээлт", icon: Truck },
-  { id: "returns", label: "Буцаалт", icon: RotateCcw },
   { id: "returns", label: "Буцаалт", icon: RotateCcw },
   {
     id: "todayProducts",
@@ -31,7 +32,7 @@ const menuItems = [
   },
 ];
 
-const Sidebar: React.FC<SidebarProps> = ({
+const AdminSidebar: React.FC<AdminSidebarProps> = ({
   activeTab,
   setActiveTab,
   sidebarOpen,
@@ -75,4 +76,4 @@ const Sidebar: React.FC<SidebarProps> = ({
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;
