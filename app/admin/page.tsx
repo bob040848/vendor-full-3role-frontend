@@ -9,7 +9,7 @@ import ReturnForm from "@/components/ReturnForm";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { useAuth } from "@clerk/nextjs";
-import AdminSidebar from "@/components/AdminSideBar";
+import AdminSidebar from "@/app/admin/components/AdminSideBar";
 
 const VendorDashboard = () => {
   const { isLoaded } = useAuth();
