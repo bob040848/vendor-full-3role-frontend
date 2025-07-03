@@ -65,6 +65,7 @@ export type CreateShopInput = {
 };
 
 export type CreateShopOrderInput = {
+  delivered_at?: InputMaybe<Scalars['DateTime']['input']>;
   notes?: InputMaybe<Scalars['String']['input']>;
   order_items: Array<ShopOrderItemInput>;
   shop_id: Scalars['String']['input'];

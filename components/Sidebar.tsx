@@ -7,6 +7,7 @@ import {
   RotateCcw,
   Factory,
   X,
+  LucideIcon,
 } from "lucide-react";
 
 type SidebarProps = {
@@ -15,14 +16,17 @@ type SidebarProps = {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
 };
-
-const menuItems = [
+type MenuItem = {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+};
+const menuItems: MenuItem[] = [
   { id: "products", label: "Бүтээгдэхүүний мэдээлэл", icon: Package },
   { id: "sales", label: "Борлуулсан бүтээгдэхүүн", icon: ShoppingCart },
   { id: "revenue", label: "Өдрийн орлого", icon: DollarSign },
   { id: "shops", label: "Дэлгүүрийн мэдээлэл", icon: Store },
   { id: "delivery", label: "Түгээлт", icon: Truck },
-  { id: "returns", label: "Буцаалт", icon: RotateCcw },
   { id: "returns", label: "Буцаалт", icon: RotateCcw },
   {
     id: "todayProducts",
@@ -64,6 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                   ? "bg-orange-700 border-r-4 border-orange-400"
                   : ""
               }`}
+              type="button"
             >
               <Icon size={20} className="mr-3" />
               {item.label}

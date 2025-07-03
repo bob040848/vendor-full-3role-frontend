@@ -18,7 +18,7 @@ type ReturnFormProps = {
   setShowReturnForm: (show: boolean) => void;
   signatureData: string;
   setSignatureData: (data: string) => void;
-}
+};
 
 const ReturnForm: React.FC<ReturnFormProps> = ({
   setShowReturnForm,
@@ -63,8 +63,9 @@ const ReturnForm: React.FC<ReturnFormProps> = ({
       );
       if (product) {
         setScannedBarcode(barcode);
-        (document.getElementsByName("product_id")[0] as HTMLSelectElement).value =
-          product.id;
+        (
+          document.getElementsByName("product_id")[0] as HTMLSelectElement
+        ).value = product.id;
         setBarcodeError(null);
       } else {
         setBarcodeError("Бүтээгдэхүүн олдсонгүй");
@@ -154,7 +155,9 @@ const ReturnForm: React.FC<ReturnFormProps> = ({
             /> */}
           </div>
           {(errors.productId || barcodeError) && (
-            <p className="text-red-500 text-xs mt-1">{errors.productId || barcodeError}</p>
+            <p className="text-red-500 text-xs mt-1">
+              {errors.productId || barcodeError}
+            </p>
           )}
         </div>
         <div>
@@ -198,7 +201,9 @@ const ReturnForm: React.FC<ReturnFormProps> = ({
             ))}
           </select>
           {errors.deliveryPersonId && (
-            <p className="text-red-500 text-xs mt-1">{errors.deliveryPersonId}</p>
+            <p className="text-red-500 text-xs mt-1">
+              {errors.deliveryPersonId}
+            </p>
           )}
         </div>
         <div>
