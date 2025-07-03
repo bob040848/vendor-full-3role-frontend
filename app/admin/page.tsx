@@ -1,7 +1,7 @@
 // frontend/app/vendor-dash/page.tsx
 "use client";
 import { useState, useEffect } from "react";
-import Header from "@/components/Header";
+import AdminHeader from "./components/AdminHeader";
 import AdminContent from "./components/AdminContent";
 import ProductForm from "@/components/ProductForm";
 import SalesForm from "@/components/SalesForm";
@@ -102,7 +102,7 @@ const VendorDashboard = () => {
         )}
 
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
-          <Header setSidebarOpen={setSidebarOpen} />
+          <AdminHeader setSidebarOpen={setSidebarOpen} />
 
           <main className="flex-1 overflow-x-hidden overflow-y-auto bg-orange-50 p-3 sm:p-4 lg:p-6">
             <div className="max-w-7xl mx-auto">
