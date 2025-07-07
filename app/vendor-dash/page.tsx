@@ -1,12 +1,12 @@
 // frontend/app/vendor-dash/page.tsx
 "use client";
 import { useState, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
-import Content from "@/components/Content";
-import ProductForm from "@/components/ProductForm";
-import SalesForm from "@/components/SalesForm";
-import ReturnForm from "@/components/ReturnForm";
+import Sidebar from "@/components/vendorcomponents/Sidebar";
+import Header from "@/components/vendorcomponents/Header";
+import Content from "@/components/vendorcomponents/Content";
+import ProductForm from "@/components/vendorcomponents/ProductForm";
+import SalesForm from "@/components/vendorcomponents/SalesForm";
+import ReturnForm from "@/components/vendorcomponents/ReturnForm";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { useAuth } from "@clerk/nextjs";
@@ -75,7 +75,7 @@ const VendorDashboard = () => {
   }
 
   return (
-    <ProtectedRoute allowedRoles={["VENDOR", "ADMIN"]}>
+    <ProtectedRoute allowedRoles={["VENDOR"]}>
       <div className="flex h-screen bg-orange-50 overflow-hidden relative">
         <Sidebar
           activeTab={activeTab}

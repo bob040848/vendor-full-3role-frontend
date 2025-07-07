@@ -70,6 +70,7 @@ const DeliveryConfirmForm: React.FC<DeliveryConfirmFormProps> = ({ onClose, onSu
     try {
       await confirmDelivery({
         variables: {
+          pieces: initialData?.pieces || 1,
           productId: input.productId,
           shopId: input.shopId,
           deliveryPersonId: input.deliveryPersonId,

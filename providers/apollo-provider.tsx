@@ -1,10 +1,11 @@
 // frontend/providers/apollo-provider.tsx
 "use client";
 
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, ApolloError } from "@apollo/client";
 import { useAuth } from "@clerk/nextjs";
 import { client } from "../lib/apollo-client";
 import { ReactNode, useEffect } from "react";
+import { GraphQLError } from 'graphql';
 
 type ApolloWrapperProps = {
   children: ReactNode;
@@ -23,7 +24,10 @@ export function ApolloWrapper({ children }: ApolloWrapperProps) {
               (window as any).__APOLLO_AUTH_TOKEN__ = token;
             }
           } catch (error) {
-            console.error("Failed to get auth token:", error);
+            const graphqlError = error instanceof ApolloError 
+              ? error
+              : new GraphQLError('Authentication token retrieval failed');
+            console.error("GraphQL Auth Error:", graphqlError);
           }
         } else {
           if (typeof window !== "undefined") {
@@ -35,17 +39,6 @@ export function ApolloWrapper({ children }: ApolloWrapperProps) {
     };
 
     updateToken();
-
-    let interval: NodeJS.Timeout | null = null;
-    if (isSignedIn) {
-      interval = setInterval(updateToken, 30000);
-    }
-
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
   }, [getToken, isSignedIn, isLoaded]);
 
   if (!isLoaded) {

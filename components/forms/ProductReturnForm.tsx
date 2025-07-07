@@ -8,7 +8,7 @@ import { returnProductSchema } from '@/lib/zod-schemas';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorMessage from '../ui/ErrorMessage';
 
-interface ProductReturnFormProps {
+type ProductReturnFormProps ={
   onClose: () => void;
   onSuccess: () => void;
   initialData?: {

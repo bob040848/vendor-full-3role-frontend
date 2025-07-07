@@ -27,7 +27,7 @@ import {
 } from "@/generated/graphql";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import ProductForm from "@/components/ProductForm";
+import ProductForm from "@/components/vendorcomponents/ProductForm";
 
 type ContentProps = {
   activeTab: string;

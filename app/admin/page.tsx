@@ -3,15 +3,15 @@
 import { useState, useEffect } from "react";
 import AdminHeader from "./components/AdminHeader";
 import AdminContent from "./components/AdminContent";
-import ProductForm from "@/components/ProductForm";
-import SalesForm from "@/components/SalesForm";
-import ReturnForm from "@/components/ReturnForm";
+import ProductForm from "@/components/vendorcomponents/ProductForm";
+import SalesForm from "@/components/vendorcomponents/SalesForm";
+import ReturnForm from "@/components/vendorcomponents/ReturnForm";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { useAuth } from "@clerk/nextjs";
 import AdminSidebar from "@/app/admin/components/AdminSideBar";
 
-const VendorDashboard = () => {
+const AdminDashboard = () => {
   const { isLoaded } = useAuth();
   const [activeTab, setActiveTab] = useState("home");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -85,7 +85,7 @@ const VendorDashboard = () => {
   }
 
   return (
-    <ProtectedRoute allowedRoles={["VENDOR", "ADMIN"]}>
+    <ProtectedRoute allowedRoles={["ADMIN"]}>
       <div className="flex h-screen bg-orange-50 overflow-hidden relative">
         <AdminSidebar
           activeTab={activeTab}
@@ -164,4 +164,4 @@ const VendorDashboard = () => {
   );
 };
 
-export default VendorDashboard;
+export default AdminDashboard;

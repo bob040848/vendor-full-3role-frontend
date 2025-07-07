@@ -17,7 +17,7 @@ type ProductFormProps ={
     description?: string | null;
     stock?: number;
     ingredient?: string | null;
-    barcode?: number | null;
+    barcode?: string | null;
     price?: number;
     expired_at?: number | null;
     image?: string | null;
@@ -31,7 +31,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ onClose, onSuccess, initialDa
   const [description, setDescription] = useState(initialData?.description || '');
   const [stock, setStock] = useState(initialData?.stock?.toString() || '0');
   const [ingredient, setIngredient] = useState(initialData?.ingredient || '');
-  const [barcode, setBarcode] = useState(initialData?.barcode?.toString() || '');
+  const [barcode, setBarcode] = useState(initialData?.barcode|| '');
   const [price, setPrice] = useState(initialData?.price?.toString() || '');
   const [expiredAt, setExpiredAt] = useState(initialData?.expired_at?.toString() || '');
   const [image, setImage] = useState(initialData?.image || '');
@@ -73,7 +73,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ onClose, onSuccess, initialDa
         description: description === '' ? undefined : description,
         stock: stock === '' ? undefined : parseInt(stock),
         ingredient: ingredient === '' ? undefined : ingredient,
-        barcode: barcode === '' ? undefined : parseInt(barcode),
+        barcode: barcode === '' ? undefined: barcode,
         price: price === '' ? undefined : parseInt(price),
         expired_at: expiredAt === '' ? undefined : parseInt(expiredAt),
         image: image === '' ? undefined : image,
@@ -87,7 +87,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ onClose, onSuccess, initialDa
         description: description || undefined,
         stock: parseInt(stock), 
         ingredient: ingredient || undefined,
-        barcode: barcode === '' ? undefined : parseInt(barcode),
+        barcode: barcode === '' ? undefined : barcode,
         price: parseInt(price), 
         expired_at: expiredAt === '' ? undefined : parseInt(expiredAt),
         image: image || undefined,

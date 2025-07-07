@@ -11,7 +11,7 @@ import { z } from "zod";
 // import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorMessage from "../ui/ErrorMessage";
 
-interface ShopFormProps {
+type ShopFormProps ={
   onClose: () => void;
   onSuccess: () => void;
   initialData?: {
