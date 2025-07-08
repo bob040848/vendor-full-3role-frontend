@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import BarcodeScannerComponent from "react-barcode-scanner";
 import {
@@ -66,7 +66,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         description: input.description || null,
         stock: input.stock,
         ingredient: input.ingredient || null,
-        barcode: input.barcode || null,
+        // barcode: input.barcode || null,
         price: input.price,
         expired_at: input.expired_at || null,
         image: input.image || null,
