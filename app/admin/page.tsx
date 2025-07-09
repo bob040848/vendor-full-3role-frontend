@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import AdminHeader from "./components/AdminHeader";
 import AdminContent from "./components/AdminContent";
-import ProductForm from "@/components/vendorcomponents/ProductForm";
-import SalesForm from "@/components/vendorcomponents/SalesForm";
-import ReturnForm from "@/components/vendorcomponents/ReturnForm";
+import ProductForm from "@/components/vendor-components/ProductForm";
+import SalesForm from "@/components/vendor-components/SalesForm";
+import ReturnForm from "@/components/vendor-components/ReturnForm";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { LoadingScreen } from "@/components/LoadingScreen";
 import { useAuth } from "@clerk/nextjs";

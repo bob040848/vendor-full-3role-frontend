@@ -14,10 +14,10 @@ import {
   useGetProductDeliveredHistoryQuery,
 } from "@/generated/graphql";
 import Modal from "@/components/ui/Modal";
-import ShopForm from "@/components/forms/ShopForm";
-import ProductForm from "@/components/forms/ProductForm";
-import DeliveryPersonForm from "@/components/forms/DeliveryPersonForm";
-import VendorForm from "@/components/forms/VendorForm";
+import ShopForm from "@/components/admin-forms/ShopForm";
+import ProductForm from "@/components/admin-forms/ProductForm";
+import DeliveryPersonForm from "@/components/admin-forms/DeliveryPersonForm";
+import VendorForm from "@/components/admin-forms/VendorForm";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { format } from "date-fns";

@@ -7,7 +7,7 @@ import {
   useDeleteDeliveryPersonMutation,
 } from "@/generated/graphql";
 import Modal from "@/components/ui/Modal";
-import DeliveryPersonForm from "@/components/forms/DeliveryPersonForm";
+import DeliveryPersonForm from "@/components/admin-forms/DeliveryPersonForm";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { useUser } from "@clerk/nextjs";

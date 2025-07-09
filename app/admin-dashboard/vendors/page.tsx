@@ -7,7 +7,7 @@ import {
   useDeleteVendorMutation,
 } from "@/generated/graphql";
 import Modal from "@/components/ui/Modal";
-import VendorForm from "@/components/forms/VendorForm";
+import VendorForm from "@/components/admin-forms/VendorForm";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { useUser } from "@clerk/nextjs";

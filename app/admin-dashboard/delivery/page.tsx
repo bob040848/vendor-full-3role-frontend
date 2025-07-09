@@ -4,8 +4,8 @@
 import React, { useState, useEffect } from "react";
 import { useGetProductDeliveredHistoryQuery } from "@/generated/graphql";
 import Modal from "@/components/ui/Modal";
-import DeliveryConfirmForm from "@/components/forms/DeliveryConfirmForm";
-import { ProductReturnForm } from "@/components/forms/ProductReturnForm";
+import DeliveryConfirmForm from "@/components/admin-forms/DeliveryConfirmForm";
+import { ProductReturnForm } from "@/components/admin-forms/ProductReturnForm";
 import LoadingSpinner from "@/components//LoadingSpinner";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { format } from "date-fns";

@@ -94,7 +94,6 @@ const Content: React.FC<ContentProps> = ({
     const sales = salesData?.productDeliveredHistory || [];
     const returns = returnsData?.productReturnHistory || [];
 
-    // Filter out sales/returns with missing product or shop data
     const validSales = sales.filter((sale) => sale.product && sale.shop);
     const validReturns = returns.filter(
       (returnItem) => returnItem.product && returnItem.shop

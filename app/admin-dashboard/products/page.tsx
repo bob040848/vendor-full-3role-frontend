@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { useGetProductsQuery, useDeleteProductMutation } from '@/generated/graphql';
 import Modal from '@/components/ui/Modal';
-import ProductForm from '@/components/forms/ProductForm';
+import ProductForm from '@/components/admin-forms/ProductForm';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorMessage from '@/components/ui/ErrorMessage';
 import { useUser } from '@clerk/nextjs';

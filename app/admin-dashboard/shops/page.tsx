@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import { useGetShopsQuery, useDeleteShopMutation } from "@/generated/graphql";
 import Modal from "@/components/ui/Modal";
-import ShopForm from "@/components/forms/ShopForm";
+import ShopForm from "@/components/admin-forms/ShopForm";
 import LoadingSpinner from "@/components//LoadingSpinner";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import { useUser } from "@clerk/nextjs";

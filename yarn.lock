@@ -2245,6 +2245,20 @@
   dependencies:
     tslib "^2.3.0"
 
+"@zxing/library@^0.21.3":
+  version "0.21.3"
+  resolved "https://registry.yarnpkg.com/@zxing/library/-/library-0.21.3.tgz#0a4cb777701884131832b05922d7e88ef1b87ab4"
+  integrity sha512-hZHqFe2JyH/ZxviJZosZjV+2s6EDSY0O24R+FQmlWZBZXP9IqMo7S3nb3+2LBWxodJQkSurdQGnqE7KXqrYgow==
+  dependencies:
+    ts-custom-error "^3.2.1"
+  optionalDependencies:
+    "@zxing/text-encoding" "~0.9.0"
+
+"@zxing/text-encoding@~0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@zxing/text-encoding/-/text-encoding-0.9.0.tgz#fb50ffabc6c7c66a0c96b4c03e3d9be74864b70b"
+  integrity sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==
+
 accepts@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/accepts/-/accepts-2.0.0.tgz"
@@ -5691,6 +5705,14 @@ react-is@^16.13.1, react-is@^16.7.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-qr-barcode-scanner@^2.1.8:
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/react-qr-barcode-scanner/-/react-qr-barcode-scanner-2.1.8.tgz#e9cd7d8181f9f3b9a6ddc41ba5e8a0eab21480bc"
+  integrity sha512-REbb+BWmPjvYIAZi6/iYrRupnK4e8d39m1YExhXk+XkKnz/aU/JembC1s+6ZO6jGVXnsGkh25Dwctcrm1HsK4g==
+  dependencies:
+    "@zxing/library" "^0.21.3"
+    react-webcam "^7.2.0"
+
 "react-redux@8.x.x || 9.x.x":
   version "9.2.0"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-9.2.0.tgz#96c3ab23fb9a3af2cb4654be4b51c989e32366f5"
@@ -5708,6 +5730,11 @@ react-signature-canvas@^1.1.0-alpha.2:
     "@types/signature_pad" "^2.3.0"
     signature_pad "^2.3.2"
     trim-canvas "^0.1.0"
+
+react-webcam@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/react-webcam/-/react-webcam-7.2.0.tgz#64141c4c7bdd3e956620500187fa3fcc77e1fd49"
+  integrity sha512-xkrzYPqa1ag2DP+2Q/kLKBmCIfEx49bVdgCCCcZf88oF+0NPEbkwYk3/s/C7Zy0mhM8k+hpdNkBLzxg8H0aWcg==
 
 react@^19.0.0:
   version "19.1.0"
@@ -6603,6 +6630,11 @@ ts-api-utils@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/ts-api-utils/-/ts-api-utils-2.1.0.tgz"
   integrity sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==
+
+ts-custom-error@^3.2.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/ts-custom-error/-/ts-custom-error-3.3.1.tgz#8bd3c8fc6b8dc8e1cb329267c45200f1e17a65d1"
+  integrity sha512-5OX1tzOjxWEgsr/YEUWSuPrQ00deKLh6D7OTWcvNHm12/7QPyRh8SYpyWvA4IZv8H/+GQWQEh/kwo95Q9OVW1A==
 
 ts-invariant@^0.10.3:
   version "0.10.3"
